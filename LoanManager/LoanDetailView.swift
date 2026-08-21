@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-// MARK: - Loan Details Screen
 struct LoanDetailView: View {
     let loan: Loan
+    @ObservedObject var viewModel: LoanViewModel
     
     var body: some View {
         List {
@@ -42,7 +42,6 @@ struct LoanDetailView: View {
             }
             
             Section(header: Text("Loan Documents")) {
-                // Safely unwrap with a default empty array
                 let docs = loan.documents ?? []
                 
                 if docs.isEmpty {
@@ -56,8 +55,9 @@ struct LoanDetailView: View {
                                 .foregroundColor(.blue)
                             Text(document.type)
                             Spacer()
-                            if let url = URL(string: document.url) {
-                                Link("View", destination: url)
+                            
+                            if let validURL = viewModel.getFullDocumentURL(from: document.url) {
+                                Link("View", destination: validURL)
                                     .font(.subheadline)
                                     .foregroundColor(.blue)
                             }
@@ -71,7 +71,6 @@ struct LoanDetailView: View {
     }
 }
 
-// MARK: - Reusable Row Component
 struct DetailRow: View {
     let title: String
     let value: String

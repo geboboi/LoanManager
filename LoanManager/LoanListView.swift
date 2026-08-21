@@ -24,7 +24,8 @@ struct LoanListView: View {
                     }
                 } else {
                     List(viewModel.filteredAndSortedLoans) { loan in
-                        NavigationLink(destination: LoanDetailView(loan: loan)) {
+                        // 👇 Here is the key update: passing the viewModel to the detail view!
+                        NavigationLink(destination: LoanDetailView(loan: loan, viewModel: viewModel)) {
                             LoanRowView(loan: loan)
                         }
                     }
@@ -89,3 +90,6 @@ struct LoanRowView: View {
     }
 }
 
+#Preview("Loan List View") {
+    LoanListView()
+}

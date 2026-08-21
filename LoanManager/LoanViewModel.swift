@@ -60,4 +60,13 @@ class LoanViewModel: ObservableObject {
         
         isLoading = false
     }
+    
+    func getFullDocumentURL(from relativePath: String) -> URL? {
+        if relativePath.hasPrefix("http") {
+            return URL(string: relativePath)
+        } else {
+            let baseURL = "https://raw.githubusercontent.com/andreascandle/p2p_json_test/main"
+            return URL(string: baseURL + relativePath)
+        }
+    }
 }
