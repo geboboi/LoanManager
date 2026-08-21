@@ -52,9 +52,7 @@ class LoanViewModel: ObservableObject {
         
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            
             let decoder = JSONDecoder()
-            
             self.loans = try decoder.decode([Loan].self, from: data)
         } catch {
             self.errorMessage = "Failed to fetch data: \(error.localizedDescription)"
